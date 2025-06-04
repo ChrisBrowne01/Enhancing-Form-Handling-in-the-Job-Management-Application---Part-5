@@ -60,8 +60,8 @@ body.dark-mode {
 
 .ticket-item {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+    justify-content: space-between;
+    align-items: stretch;
 }
 
 /* Header Stying */
@@ -123,7 +123,11 @@ body.dark-mode .dark-mode-toggle:hover {
 
 /* For medium screens (e.g., tablets) */
 @media (max-width: 1000px) {
-  
+  .job-columns {
+      padding: 30px 4%;
+      gap: 15px;
+  }
+
   .job-column { 
       margin: auto; 
   }
@@ -148,6 +152,7 @@ body.dark-mode .dark-mode-toggle:hover {
     width: 90%;
   }
 }
+
 
 /* Optional: Even smaller for very small phones */
 @media (max-width: 480px) {

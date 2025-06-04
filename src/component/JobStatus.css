@@ -144,6 +144,7 @@
   display: flex;
   justify-content: space-between;
 }
+
 .job-action-button {
   background-color: var(--submit-bg-light); 
   color: white; 
@@ -153,7 +154,7 @@
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: bold;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, width 0.2s ease, min-width 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
   min-width: 100px; 
 }
 
@@ -192,4 +193,22 @@ body.dark-mode .job-action-button:hover {
   width: 20px;
   opacity: 40%;
   transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 1200px) {
+  .job-action-button {
+    width: 100px;
+  }  
+}
+
+/* Optional: Even smaller for very small phones */
+@media (max-width: 480px), (min-width: 768px) and (max-width: 1000px) {
+  .ticket-item {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .card-body {
+    padding-bottom: 10px;
+  }
 }
