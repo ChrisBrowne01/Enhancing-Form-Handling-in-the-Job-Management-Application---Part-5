@@ -18,7 +18,7 @@ export const JobStatus = ({job, updateJobStatus, status, deleteJob}) => {
         <div className="button-group">
           {/* Change or add Delete button icon */}
           <button onClick={() => updateJobStatus(job.id)} className="job-action-button" >
-            {job.status === "Need to Start" ? "Start Job" : job.status === "In Progress" ? "Complete Job" : "Mark as Incomplete"}
+            {job.status === "To Start" ? "Start Job" : job.status === "In Progress" ? "Complete Job" : "Mark as Incomplete"}
           </button>
           <div className='jobDelete' onClick={() => deleteJob(job.id)}>
             <img src={deleteIcon} className='deletingImg' alt="Delete" />

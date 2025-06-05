@@ -24,7 +24,7 @@ function App() {
   }, [jobs]);
 
   const [search, setSearch] = useState("");
-  const [newJob, setNewJob] = useState({id: '', title: '', status: '', task: ''})
+  const [newJob, setNewJob] = useState({id: '', title: '', status: '', category: ''})
   const [error, setError] = useState("")
 
   // Initialize dark mode from localStorage or default to false
@@ -72,7 +72,7 @@ function App() {
     if (!newJob.title.trim()) { setError("Job Title cannot be empty.");
       return;
     }
-    if (!newJob.task) {
+    if (!newJob.category) {
       setError("Please select a job category.");
       return;
     }
@@ -90,14 +90,14 @@ function App() {
       id: newId,
       title: newJob.title.trim(),
       status: newJob.status.trim(),
-      task: newJob.task.trim()
+      category: newJob.category.trim()
     };
         
     // Update the 'jobs' state by adding the new job listing
     setJobs([...jobs, newJobListing]);
     
     // Clear the form fields after successful submission
-    setNewJob({id: '', title: '',  status: '', task: ''});
+    setNewJob({id: '', title: '',  status: '', category: ''});
     setError("");
 
     // Log the data here, after the state has been updated
@@ -181,7 +181,7 @@ const onDragEnd = (result) => {
             alt="To-do icon"
             jobs={jobs}
             setJobs={setJobs} 
-            statusName="Need to Start" 
+            statusName="To Start" 
             search={search}
             setSearch={setSearch}
             updateJobStatus={updateJobStatus}
