@@ -26,7 +26,6 @@ function App() {
   const [search, setSearch] = useState("");
   const [newJob, setNewJob] = useState({id: '', title: '', status: '', category: ''})
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");  
 
   // Initialize dark mode from localStorage or default to false
   const [darkMode, setDarkMode] = useState(() => {
