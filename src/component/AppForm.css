@@ -105,6 +105,12 @@ body.dark-mode .bot-input, body.dark-mode .filter-input input {
   box-shadow: 0 0 5px rgba(174, 0, 255, 0.5);
 }
 
+.input-error {
+    border: 2px solid red;
+    outline: 2px solid #a40f0f;
+    box-shadow: 0 0 3px 3px #ff00005e;
+}
+
 /* Add styles for the form details section */
 .form-details {
   grid-area: categories;

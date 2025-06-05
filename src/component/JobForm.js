@@ -128,7 +128,7 @@ console.log('setSuccessMessage: ', setSuccessMessage)
               newJob={newJob}
               handleCategoryClick={handleCategoryClick}
             />
-            <select className="job-status" 
+            <select className={`job-status ${error && !newJob.category.trim() ? 'input-error' : ''}`} 
               name="category"
               value={newJob.category}
               onChange={handleInputChange}
@@ -146,7 +146,7 @@ console.log('setSuccessMessage: ', setSuccessMessage)
 
         <div>
           {/* A dropdown menu for selecting job status */}
-          <select className="job-status" 
+          <select className={`job-status ${error && !newJob.status.trim() ? 'input-error' : ''}`} 
             name="status"
             value={newJob.status}
             onChange={handleInputChange}
