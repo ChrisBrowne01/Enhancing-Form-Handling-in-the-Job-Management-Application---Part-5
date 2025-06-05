@@ -1,5 +1,7 @@
 import { React, useState } from 'react';
 import { FormButton } from './FormButton';
+import { FilterForm } from './FilterForm';
+import './FormButton.css';
 
 export const JobForm = ({addNewJob, newJob, setNewJob, search, setSearch, error, setError}) => {
 /* const [newJob, setNewJob] = useState({
@@ -9,7 +11,6 @@ export const JobForm = ({addNewJob, newJob, setNewJob, search, setSearch, error,
     
     });*/
 
-    // const [formErrors, setFormErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');  
   
   const categories = ['Read Emails', 'Web Parsing', 'Send Emails'];
@@ -168,27 +169,11 @@ console.log('setSuccessMessage: ', setSuccessMessage)
 
       </form>
 
-      <form className="filter-input">
-        <input
-          placeholder="Search by Job"
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
-        />
-      </form>
+      <FilterForm 
+        search={search}
+        setSearch={setSearch}
+      />
 
-            {/* <form onSubmit={handleSubmit}> */}
-{/* 
-<input
-        type="text"
-        name="title"
-        value={jobDetails.title}
-        onChange={handleInputChange}
-        placeholder="Enter job title"
-      /> */}
-      
-      {/* 
-      <button type="submit">Add Job</button>
-    </form> */}
     </div>
   );
 };

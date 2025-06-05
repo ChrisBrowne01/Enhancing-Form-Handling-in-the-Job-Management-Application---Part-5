@@ -1,6 +1,5 @@
 import React from 'react'
 import './FormButton';
-import './FormButton.css';
 
 export const FormButton = (props) => {
   return (

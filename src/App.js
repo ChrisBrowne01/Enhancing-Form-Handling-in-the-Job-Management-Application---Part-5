@@ -25,7 +25,8 @@ function App() {
 
   const [search, setSearch] = useState("");
   const [newJob, setNewJob] = useState({id: '', title: '', status: '', category: ''})
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");  
 
   // Initialize dark mode from localStorage or default to false
   const [darkMode, setDarkMode] = useState(() => {
@@ -137,19 +138,12 @@ const onDragEnd = (result) => {
       newStatus = "In Progress";
     } else if (destination.droppableId === "Completed") {
       newStatus = "Completed";
-    } else if (destination.droppableId === "Stopped") { // If you want to allow dropping into "Stopped"
+    } else if (destination.droppableId === "Stopped") { 
       newStatus = "Stopped";
     }
 
-
     const updatedDraggedJob = { ...draggedJob, status: newStatus };
-
-    // Insert the dragged job into its new position in the destination column
-    // For simplicity, we are just changing the status and re-filtering in JobColumn.
-    // If you wanted to maintain order within columns, you'd insert at destination.index
-    // after filtering, and then combine the arrays. For this setup, simply update status.
     newJobs.push(updatedDraggedJob);
-
     setJobs(newJobs);
   };
 
