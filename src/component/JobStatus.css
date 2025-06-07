@@ -178,7 +178,7 @@ body.dark-mode .job-action-button:hover {
 
 /* Delete job styling */
 
-.jobDelete {
+.jobEdit, .jobDelete {
   width: 30px;
   height: 30px;
   border-radius: 95%;
@@ -186,6 +186,12 @@ body.dark-mode .job-action-button:hover {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.editImg {
+  width: 20px;
+  vertical-align: -webkit-baseline-middle;
   transition: all 0.3s ease-in-out;
 }
 

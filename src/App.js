@@ -14,17 +14,21 @@ function App() {
   const [jobs, setJobs] = useState(() => {
     const savedJobs = localStorage.getItem('jobs');
     return savedJobs ? JSON.parse(savedJobs) : [
-    { id: 1, title: 'Parse Emails', status: 'Need to Start' },
-    { id: 2, title: 'SAP Extraction', status: 'In Progress' },
-    { id: 3, title: 'Generate Report', status: 'Completed' }
-  ]});
+      { id: 1, title: 'Parse Emails', status: 'Need to Start' },
+      { id: 2, title: 'SAP Extraction', status: 'In Progress' },
+      { id: 3, title: 'Generate Report', status: 'Completed' }
+    ]
+  });
 
   useEffect(() => {
     localStorage.setItem('jobs', JSON.stringify(jobs));
   }, [jobs]);
 
   const [search, setSearch] = useState("");
-  const [newJob, setNewJob] = useState({id: '', title: '', status: '', category: ''})
+  const [newJob, setNewJob] = useState({ id: '', title: '', status: '', category: '' })
+  // 1. Edit Functionality Implementation
+  const [editingJob, setEditingJob] = useState(null);
+  const [editForm, setEditForm] = useState({ id: '', title: '', status: '', category: '' });
   const [error, setError] = useState("");
 
   // Initialize dark mode from localStorage or default to false
@@ -32,7 +36,7 @@ function App() {
     const savedMode = localStorage.getItem('darkMode');
     return savedMode === 'true' ? true : false;
   });
-  
+
   // Effect to apply/remove the 'dark-mode' class on the body
   useEffect(() => {
     if (darkMode) {
@@ -50,26 +54,26 @@ function App() {
   };
 
   // Delete job based on ID
-  const deleteJob = (id) => {setJobs(jobs.filter((job) => job.id !== id))};
+  const onDeleteJob = (id) => { setJobs(jobs.filter((job) => job.id !== id)) };
 
   // Update job status based on condition
   const updateJobStatus = (id) => {
     setJobs(
       jobs.map(job =>
         job.id === id ?
-        { ...job, status: (job.status === "Need to Start" || job.status === "stopped") ? "In Progress" : job.status === "In Progress" ? "Completed" : "In Progress" }
+          { ...job, status: (job.status === "Need to Start" || job.status === "stopped") ? "In Progress" : job.status === "In Progress" ? "Completed" : "In Progress" }
           : job
       )
     );
   };
 
   // Implement add new job functionality
-  // const addNewJob = (title) => {};
   const addNewJob = (e) => {
     e.preventDefault();
 
     // Basic validation
-    if (!newJob.title.trim()) { setError("Job Title cannot be empty.");
+    if (!newJob.title.trim()) {
+      setError("Job Title cannot be empty.");
       return;
     }
     if (!newJob.category) {
@@ -92,19 +96,49 @@ function App() {
       status: newJob.status.trim(),
       category: newJob.category.trim()
     };
-        
+
     // Update the 'jobs' state by adding the new job listing
     setJobs([...jobs, newJobListing]);
-    
+
     // Clear the form fields after successful submission
-    setNewJob({id: '', title: '',  status: '', category: ''});
+    setNewJob({ id: '', title: '', status: '', category: '' });
     setError("");
 
     // Log the data here, after the state has been updated
-    console.log("Submitting Job:", newJobListing); 
-    console.log("All Jobs:", [...jobs, newJobListing]); 
+    console.log("Submitting Job:", newJobListing);
+    console.log("All Jobs:", [...jobs, newJobListing]);
   };
-const onDragEnd = (result) => {
+
+
+  // Edit Functions
+  // Edit job based on ID
+  const onEditJob = (job) => {
+    setEditingJob(job.id);
+    setEditForm({ ...job });
+  };
+
+  // Submit edit form
+  const saveEdit = (e) => {
+    e.preventDefault();
+    if (!editForm.title.trim()) {
+      setError("Job Title cannot be empty.");
+      return;
+    }
+    setJobs(jobs.map(job =>
+      job.id === editingJob ? { ...editForm } : job
+    ));
+    setEditingJob(null);
+    setEditForm({ id: '', title: '', status: '', category: '' });
+    setError("");
+  };
+  
+/*   const cancelEdit = () => {
+    setEditingJob(null);
+    setEditForm({ id: '', title: '', status: '', category: '' });
+    setError("");
+  };
+ */
+  const onDragEnd = (result) => {
     const { source, destination, draggableId } = result;
 
     // Dropped outside the list
@@ -137,7 +171,7 @@ const onDragEnd = (result) => {
       newStatus = "In Progress";
     } else if (destination.droppableId === "Completed") {
       newStatus = "Completed";
-    } else if (destination.droppableId === "Stopped") { 
+    } else if (destination.droppableId === "Stopped") {
       newStatus = "Stopped";
     }
 
@@ -155,63 +189,64 @@ const onDragEnd = (result) => {
         <button className="dark-mode-toggle" onClick={toggleDarkMode}>
           {darkMode ? 'Light Mode ☀️' : 'Dark Mode 🌙'}
         </button>
-        
-        <Header 
+
+        <Header
           addNewJob={addNewJob}
-          newJob={newJob}
-          setNewJob={setNewJob}
-          search={search}
-          setSearch={setSearch}
-          error={error}
-          setError={setError}
+          jobs={jobs} setJobs={setJobs}
+          newJob={newJob} setNewJob={setNewJob}
+          editingJob={editingJob} setEditingJob={setEditingJob}
+          saveEdit={saveEdit}
+          search={search} setSearch={setSearch}
+          error={error} setError={setError}
         />
         <main className="job-columns">
-          
+
           {/* update state & delete functionality */}
           <JobColumn
-            title="Need to Start" 
-            image={toDoIcon} 
+            title="Need to Start"
+            image={toDoIcon}
             alt="To-do icon"
-            jobs={jobs}
-            setJobs={setJobs} 
-            statusName="To Start" 
-            search={search}
-            setSearch={setSearch}
+            jobs={jobs} setJobs={setJobs}
+            search={search} setSearch={setSearch}
+            statusName="To Start"
             updateJobStatus={updateJobStatus}
-            deleteJob={deleteJob}
+            onDeleteJob={onDeleteJob}
+            onEditJob={onEditJob}
             droppableId="Need to Start"
           />
 
-          <JobColumn 
-            title="In Progress" 
-            image={inProgressIcon} 
+          <JobColumn
+            title="In Progress"
+            image={inProgressIcon}
             alt="In-progress icon"
             jobs={jobs}
             setJobs={setJobs}
             statusName="In Progress"
             search={search}
-            setSearch={setSearch} 
+            setSearch={setSearch}
             updateJobStatus={updateJobStatus}
-            deleteJob={deleteJob}
+            onDeleteJob={onDeleteJob}
+            onEditJob={onEditJob}
             droppableId="In Progress"
           />
 
-          <JobColumn 
-            title="Completed" 
-            image={doneIcon} 
+          <JobColumn
+            title="Completed"
+            image={doneIcon}
             alt="Done icon"
             jobs={jobs}
             setJobs={setJobs}
-            statusName="Completed" 
+            statusName="Completed"
             search={search}
             setSearch={setSearch}
             updateJobStatus={updateJobStatus}
-            deleteJob={deleteJob}
+            onDeleteJob={onDeleteJob}
+            onEditJob={onEditJob}
             droppableId="Completed"
           />
 
         </main>
-        <Footer /> 
+        <Footer />
       </div>
     </DragDropContext>
   );

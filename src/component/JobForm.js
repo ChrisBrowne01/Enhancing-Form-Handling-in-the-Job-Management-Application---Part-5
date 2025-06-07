@@ -4,12 +4,6 @@ import { FilterForm } from './FilterForm';
 import './FormButton.css';
 
 export const JobForm = ({addNewJob, newJob, setNewJob, search, setSearch, error, setError}) => {
-/* const [newJob, setNewJob] = useState({
-    title: '',
-    category: '',
-    status: 'To Start'
-    
-    });*/
 
   const [successMessage, setSuccessMessage] = useState('');  
   

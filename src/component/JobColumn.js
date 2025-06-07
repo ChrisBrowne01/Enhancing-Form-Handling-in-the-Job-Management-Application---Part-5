@@ -3,7 +3,7 @@ import { Droppable, Draggable } from '@hello-pangea/dnd';
 import { JobStatus } from './JobStatus';
 import './JobColumn.css';
 
-export const JobColumn = ({ jobs, title, image, alt, statusName, search, updateJobStatus, deleteJob, droppableId }) => {
+export const JobColumn = ({ jobs, title, image, alt, statusName, search, updateJobStatus, onDeleteJob, droppableId }) => {
 
   // Filter jobs: first filter by status, then by search query
   const filteredByStatus = jobs.filter(job => job.status === statusName);
@@ -47,7 +47,7 @@ export const JobColumn = ({ jobs, title, image, alt, statusName, search, updateJ
                       job={job}
                       updateJobStatus={updateJobStatus}
                       status={title}
-                      deleteJob={deleteJob}
+                      onDeleteJob={onDeleteJob}
                     />
                   </div>
                 )}
